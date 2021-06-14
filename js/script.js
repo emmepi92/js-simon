@@ -8,32 +8,30 @@ document.addEventListener('DOMContentLoaded', function(){
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    function disabledHtml (name) {
+        return name.disabled = true
+    }
+
     var startBtn = document.getElementById('next-btn');
     var rangeMaxInput = document.getElementById('range');
-    var rangeMax = 100;
     var totalNumsInput = document.getElementById('nums-to-remember')
-    var totalNums = 5;
     var outputResult = document.getElementById('result');
     var result = '';
     var pcNums = [];
     var userNums = [];
     var guessedNums = [];
-    var userNum = 0;
-    var pcNum = 0;
 
     startBtn.addEventListener('click', function () {
 
-        rangeMax = parseInt(rangeMaxInput.value);
-        rangeMaxInput.disabled = true;
-
-        totalNums = parseInt(totalNumsInput.value);  
-        totalNumsInput.disabled = true; 
-
-        startBtn.disabled = true;
-              
+        var rangeMax = parseInt(rangeMaxInput.value);
+        var totalNums = parseInt(totalNumsInput.value);  
+        
+        disabledHtml(rangeMaxInput);
+        disabledHtml(totalNumsInput); 
+        disabledHtml(startBtn);              
 
         while (pcNums.length < totalNums) {
-            pcNum = getRandomNum(1,rangeMax);
+            var pcNum = getRandomNum(1,rangeMax);
             if (!pcNums.includes(pcNum))
             pcNums.push(pcNum);
         }
@@ -44,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function(){
         setTimeout( function() {
     
             while (userNums.length < pcNums.length){
-                userNum = parseInt(prompt('Ricordi i numeri mostrati?'));
+                var userNum = parseInt(prompt('Ricordi i numeri mostrati?'));
                 if (userNum > 0 && userNum <= rangeMax && !isNaN(userNum)) {
                     if(!userNums.includes(userNum)) {
                         userNums.push(userNum);
@@ -72,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function(){
             } else {
                 result = 'Oh no, non hai ricordato nessun numero';
             }
+            
+            outputResult.style.paddingBottom = '24px';
 
             outputResult.innerHTML = result + guessedNums;
     
