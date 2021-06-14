@@ -8,51 +8,65 @@ document.addEventListener('DOMContentLoaded', function(){
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    var startBtn = document.getElementById('next-btn');
+
     var pcNums = [];
     var userNums = [];
     var guessedNums = [];
     var userNum = 0;
-    var pcNum =0;
-    var maxLimit = 100;
-    
-    while (pcNums.length < 5) {
-        pcNum = getRandomNum(1,maxLimit);
-        if (!pcNums.includes(pcNum))
-        pcNums.push(pcNum);
-    }
-    alert ('Ricorda ' + pcNums);
-    
-    setTimeout( function() {
+    var pcNum = 0;
+    var rangeMaxInput = document.getElementById('range');
+    var rangeMax = 100;
+    var totalNumsInput = document.getElementById('nums-to-remember')
+    var totalNums = 5;
 
-        while (userNums.length < pcNums.length){
-            userNum = parseInt(prompt('Ricordi i numeri mostrati?'));
-            if (userNum > 0 && userNum <= maxLimit && !isNaN(userNum)) {
-                if(!userNums.includes(userNum)) {
-                    userNums.push(userNum);
+    startBtn.addEventListener('click', function () {
+
+        rangeMax = parseInt(rangeMaxInput.value);
+
+        totalNums = parseInt(totalNumsInput.value);         
+
+        while (pcNums.length < totalNums) {
+            pcNum = getRandomNum(1,rangeMax);
+            if (!pcNums.includes(pcNum))
+            pcNums.push(pcNum);
+        }
+        alert ('Ricorda ' + pcNums);
+        
+        setTimeout( function() {
+    
+            while (userNums.length < pcNums.length){
+                userNum = parseInt(prompt('Ricordi i numeri mostrati?'));
+                if (userNum > 0 && userNum <= rangeMax && !isNaN(userNum)) {
+                    if(!userNums.includes(userNum)) {
+                        userNums.push(userNum);
+                    } else {
+                        alert('Numero già inserito');
+                    }
                 } else {
-                    alert('Numero già inserito');
+                    alert('Inserisci un numero compreso fra 1 e ' + rangeMax);
                 }
+            }
+    
+            for ( var x = 0; x < userNums.length; x++) {
+                if (pcNums.includes(userNums[x])) {
+                guessedNums.push(userNums[x])
+                }
+            }
+    
+            if (guessedNums.length > 0) {
+                document.getElementById('result').innerHTML = 'Complimenti hai ricordato perfettamente ' + guessedNums.length + ' su ' + pcNums.length;
             } else {
-                alert('Inserisci un numero compreso fra 1 e ' + maxLimit);
+                document.getElementById('result').innerHTML = 'Oh no, non hai ricordato nessun numero';
             }
-        }
+    
+            //denug
+            console.log ('numeri mostrati',pcNums)
+            console.log('numeri dell"utente', userNums);
+            console.log('numeri indovinati', guessedNums);
+    
+        },3000) 
 
-        for ( var x = 0; x < userNums.length; x++) {
-            if (pcNums.includes(userNums[x])) {
-            guessedNums.push(userNums[x])
-            }
-        }
-
-        if (guessedNums.length > 0) {
-            document.getElementById('result').innerHTML = 'Complimenti hai ricordato perfettamente' + guessedNums.length + ' su ' + pcNums.length;
-        } else {
-            document.getElementById('result').innerHTML = 'Oh no, non hai ricordato nessun numero';
-        }
-
-        //denug
-        console.log ('numeri mostrati',pcNums)
-        console.log('numeri dell"utente', userNums);
-        console.log('numeri indovinati', guessedNums);
-
-    },30000) 
+    })
+    
 })
