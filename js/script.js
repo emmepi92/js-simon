@@ -49,9 +49,10 @@ document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('result').innerHTML = 'Oh no, non hai ricordato nessun numero';
         }
 
+        //denug
         console.log ('numeri mostrati',pcNums)
         console.log('numeri dell"utente', userNums);
         console.log('numeri indovinati', guessedNums);
 
-    },2000)
+    },30000) 
 })
