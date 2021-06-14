@@ -23,8 +23,12 @@ document.addEventListener('DOMContentLoaded', function(){
     startBtn.addEventListener('click', function () {
 
         rangeMax = parseInt(rangeMaxInput.value);
+        rangeMaxInput.disabled = true;
 
-        totalNums = parseInt(totalNumsInput.value);         
+        totalNums = parseInt(totalNumsInput.value);  
+        totalNumsInput.disabled = true; 
+        startBtn.disabled = true;
+              
 
         while (pcNums.length < totalNums) {
             pcNum = getRandomNum(1,rangeMax);
@@ -55,17 +59,17 @@ document.addEventListener('DOMContentLoaded', function(){
             }
     
             if (guessedNums.length > 0) {
-                document.getElementById('result').innerHTML = 'Complimenti hai ricordato perfettamente ' + guessedNums.length + ' su ' + pcNums.length;
+                document.getElementById('result').innerHTML = 'Complimenti hai ricordato perfettamente ' + guessedNums.length + ' su ' + totalNums;
             } else {
                 document.getElementById('result').innerHTML = 'Oh no, non hai ricordato nessun numero';
             }
     
-            //denug
+            //debug
             console.log ('numeri mostrati',pcNums)
             console.log('numeri dell"utente', userNums);
             console.log('numeri indovinati', guessedNums);
     
-        },3000) 
+        },30000) 
 
     })
     
