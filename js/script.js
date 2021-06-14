@@ -9,16 +9,17 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     var startBtn = document.getElementById('next-btn');
-
+    var rangeMaxInput = document.getElementById('range');
+    var rangeMax = 100;
+    var totalNumsInput = document.getElementById('nums-to-remember')
+    var totalNums = 5;
+    var outputResult = document.getElementById('result');
+    var result = '';
     var pcNums = [];
     var userNums = [];
     var guessedNums = [];
     var userNum = 0;
     var pcNum = 0;
-    var rangeMaxInput = document.getElementById('range');
-    var rangeMax = 100;
-    var totalNumsInput = document.getElementById('nums-to-remember')
-    var totalNums = 5;
 
     startBtn.addEventListener('click', function () {
 
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         totalNums = parseInt(totalNumsInput.value);  
         totalNumsInput.disabled = true; 
+
         startBtn.disabled = true;
               
 
@@ -35,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function(){
             if (!pcNums.includes(pcNum))
             pcNums.push(pcNum);
         }
+        console.log ('numeri mostrati',pcNums) // debug
+
         alert ('Ricorda ' + pcNums);
         
         setTimeout( function() {
@@ -59,10 +63,17 @@ document.addEventListener('DOMContentLoaded', function(){
             }
     
             if (guessedNums.length > 0) {
-                document.getElementById('result').innerHTML = 'Complimenti hai ricordato perfettamente ' + guessedNums.length + ' su ' + totalNums;
+                result = 'Complimenti hai ricordato perfettamente ' + guessedNums.length + ' numeri su ' + totalNums + '.<br/>Numeri indovinati: ';
+                if (guessedNums.length === 1) {
+                    result = 'Complimenti hai ricordato perfettamente ' + guessedNums.length + ' numero su ' + totalNums + '.<br/>Numero indovinato: ';
+                } else if (guessedNums.length === totalNums) {
+                    result = 'Sei un mostro, li hai ricordati tutti: '
+                }
             } else {
-                document.getElementById('result').innerHTML = 'Oh no, non hai ricordato nessun numero';
+                result = 'Oh no, non hai ricordato nessun numero';
             }
+
+            outputResult.innerHTML = result + guessedNums;
     
             //debug
             console.log ('numeri mostrati',pcNums)
